@@ -11,10 +11,7 @@ steps:
 - name: 'gcr.io/cloud-builders/npm'
   args: ['run','build']  
 
-- name: 'gcr.io/reviews-236608/firebase'
-  args: [target:apply, hosting, staging, reviews-staging] 
-
-- name: 'gcr.io/reviews-236608/firebase'
+- name: 'gcr.io/rajivkhushiram-reviews-project/firebase'
   args: [deploy, --only, hosting] 
 
          

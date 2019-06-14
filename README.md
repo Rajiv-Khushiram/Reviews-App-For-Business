@@ -73,25 +73,23 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 ### CI/CD Hosting Pipeline:
 
+Firebase Project
+
+
+
 #### Firebase Multi-site Hosting:
 
 Two hosting environments have been set up for this project. 
-
-1: https://reviews-236608.firebaseapp.com/ (Branch: master)
-
-2: https://reviews-staging.firebaseapp.com/ (Branch: dev)
 
 Both sites share the same firebase project.
 
 (Important: Do not use : "firebase deploy"  locally for it will replace the instance which cloudbuild service built.)
 
-#### Triggers 
+#### Deployment Strategy 
 
 The Build triggers are integrated with this repository
 
-Two triggers have been created to deploy the code base from the dev and master branch. 
-
-Each trigger will run the commands found in the cloudbuild.yaml file. 
+A trigger will run the commands found in the cloudbuild.yaml file which will build and deploythe react project 
 
 Tutorial: https://fireship.io/lessons/ci-cd-with-google-cloud-build/
 
