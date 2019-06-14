@@ -31,6 +31,12 @@ class CustomerReview extends Component {
     submitted:false,
   };
 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
   async componentDidMount() {
      await this.props.getAccount()
      await this.props.getBusiness();
@@ -85,11 +91,7 @@ class CustomerReview extends Component {
     
   };
 
-  handleChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  }
+  
 
   clearPictureUrl = () => { 
     this.setState({
