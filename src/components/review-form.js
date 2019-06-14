@@ -85,6 +85,12 @@ class CustomerReview extends Component {
     
   };
 
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
   clearPictureUrl = () => { 
     this.setState({
       pictureUri: false,
@@ -262,8 +268,7 @@ class CustomerReview extends Component {
                 <Input type="text" id="phone" onChange={this.handleChange} style={{ width: '100%' }} placeholder = "Phone Number" />
             )}
           </Form.Item>
-          <Form.Item>
-          </Form.Item>
+
           <Form.Item >Purchase Details</Form.Item >
           <Form.Item>
             <Select 
