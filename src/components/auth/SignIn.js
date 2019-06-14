@@ -47,14 +47,14 @@ class SignIn extends Component {
                         {getFieldDecorator('email', {
                             rules: [{ required: true, message: 'Please input your Email!' }],
                         })(
-                            <Input prefix={<Icon type="mail" style={{ width: '50%' }}/>} onChange={this.handleChange} placeholder="Email"/>
+                            <Input prefix={<Icon type="mail" style={{ width: '50%' }}/>} onChange={this.handleChange} placeholder="test@gmail.com"/>
                         )}
                     </Form.Item>
                     <Form.Item>
                         {getFieldDecorator('password', {
                             rules: [{ required: true, message: 'Please input your Password!' }],                       
                         })(
-                            <Input prefix={<Icon type="lock" style={{ width: '50%' }}/>} onChange={this.handleChange} type="password" placeholder="Password"/>
+                            <Input prefix={<Icon type="lock" style={{ width: '50%' }}/>} onChange={this.handleChange} type="password" placeholder="test123"/>
                         )}
                     </Form.Item>
                     <Form.Item>
