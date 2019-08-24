@@ -41,6 +41,7 @@ class SignIn extends Component {
 
         return (
             <div className = "login-container">
+                <h1> Use on Mobile device for intended experience </h1>
                 <Form onSubmit={this.handleSubmit}>
                     <Form.Item>Sign In</Form.Item>
                     <Form.Item>
