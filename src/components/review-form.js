@@ -185,7 +185,7 @@ class CustomerReview extends Component {
     }
   };
   openNotification() {
-    alert("Details saved. The customer will receive an SMS soon.");
+    alert("Details saved. The customer will receive an SMS 13:00 PM Melbourne Time");
     // notification.open({
     //   message: 'Notification Title',
     //   description: 'Form has been successfully submitted',

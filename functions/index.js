@@ -398,17 +398,17 @@ function createRandomId(length) {
   return result;
 }
 
-// exports.scheduledFunction = functions.pubsub.schedule('5 18 * * *')
-// .timeZone('Australia/Melbourne') // Users can choose timezone - default is America/Los_Angeles
-// .onRun((context) => {
-//   sendMessages()
-//   console.log("Sent Messages Terminated")
-//   return null;
-// });
+exports.scheduledFunction = functions.pubsub.schedule('5 13 * * *')
+.timeZone('Australia/Melbourne') // Users can choose timezone - default is America/Los_Angeles
+.onRun((context) => {
+  sendMessages()
+  console.log("Sent Messages Terminated")
+  return null;
+});
 
 
-exports.dispatchBirdMessages = functions.pubsub
-  .schedule("every 1 minutes")
-  .onRun(context => {
-    return dispatchSMS()
-  });
+// exports.dispatchBirdMessages = functions.pubsub
+//   .schedule("every 1 minutes")
+//   .onRun(context => {
+//     return dispatchSMS()
+//   });
