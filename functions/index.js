@@ -4,6 +4,8 @@ const request = require("request-promise");
 const algoliasearch = require("algoliasearch");
 const express = require("express");
 const cors = require("cors");
+const FROM_NUMBER = "+61480021420";
+
 
 const handleShortUrlRequest = require("./handle-short-url-request");
 const internalMetrics = require("./api/internal-metrics");
@@ -36,7 +38,7 @@ const api = express();
 
 const ALGOLIA_INDEX_PURCHASES = "purchases";
 const ALGOLIA_INDEX_CUSTOMERS = "customers";
-const DOMAINURL = "https://rajivkhushiram-reviews-project.web.app/";
+const DOMAINURL = "https://rajivkhushiram-reviews-project.web.app";
 
 admin.initializeApp(functions.config().firebase);
 
