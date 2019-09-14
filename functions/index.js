@@ -63,31 +63,31 @@ api.get("/r/:id", handleShortUrlRequest);
 
 exports.api = functions.https.onRequest(api);
 
-exports.fbPostFunction = functions
-  .region("asia-northeast1")
-  .firestore.document("photos/{productPictureId}")
-  .onCreate(doc => {
-    const db = admin.firestore();
-    const purchaseId = doc.data().purchase;
-    const pictureUrl = doc.data().picture_url;
-    return getPurchases(purchaseId)
-      .get()
-      .then(doc => {
-        const comment = doc.data().comment;
+// exports.fbPostFunction = functions
+//   .region("asia-northeast1")
+//   .firestore.document("photos/{productPictureId}")
+//   .onCreate(doc => {
+//     const db = admin.firestore();
+//     const purchaseId = doc.data().purchase;
+//     const pictureUrl = doc.data().picture_url;
+//     return getPurchases(purchaseId)
+//       .get()
+//       .then(doc => {
+//         const comment = doc.data().comment;
 
-        return request({
-          method: "POST",
-          url: "https://graph.facebook.com/v3.3/447511942679397/photos",
-          body: {
-            url: pictureUrl,
-            published: "true",
-            message: comment,
-            access_token: functions.config().facebook.pagetoken
-          },
-          json: true
-        });
-      });
-  });
+//         return request({
+//           method: "POST",
+//           url: "https://graph.facebook.com/v3.3/447511942679397/photos",
+//           body: {
+//             url: pictureUrl,
+//             published: "true",
+//             message: comment,
+//             access_token: functions.config().facebook.pagetoken
+//           },
+//           json: true
+//         });
+//       });
+//   });
 
 const sendReviewSms = (snap, context) => {
   var db = admin.firestore();
