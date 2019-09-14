@@ -365,7 +365,7 @@ class CustomerReview extends Component {
             <Form.Item />
             <h3>Purchase Details</h3>
             <Form.Item>
-              <Select
+              <Select 
                 defaultValue={lists.years[0]}
                 style={{ width: "100%" }}
                 value={this.state.selected.year}
@@ -378,11 +378,12 @@ class CustomerReview extends Component {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item>
+            {/* <Form.Item>
               <Select
                 showSearch
                 placeholder="Make"
                 style={{ width: "100%" }}
+                key={this.state.selected.make}
                 value={this.state.selected.make}
                 size="large"
                 onChange={this.handleProductMakeChange}
@@ -391,7 +392,7 @@ class CustomerReview extends Component {
                   return <Option key={make}>{make}</Option>;
                 })}
               </Select>
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item>
               <Select
                 style={{ width: "100%" }}

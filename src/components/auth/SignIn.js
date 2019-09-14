@@ -49,7 +49,7 @@ class SignIn extends Component {
               <Input
                 prefix={<Icon type="mail" style={{ width: "50%" }} />}
                 onChange={this.handleChange}
-                placeholder="admin@gmail.com"
+                placeholder="admin123@gmail.com"
                 size="large"
                 type="email"
               />
@@ -66,7 +66,7 @@ class SignIn extends Component {
                 onChange={this.handleChange}
                 size="large"
                 type="password"
-                placeholder="admin"
+                placeholder="admin123"
               />
             )}
           </Form.Item>

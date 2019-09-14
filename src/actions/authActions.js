@@ -10,6 +10,7 @@ export const signIn = credential => {
         return dispatch({ type: "LOGIN_SUCCESS" });
       })
       .catch(err => {
+        console.log(err)
         dispatch({ type: "LOGIN_ERROR", err });
       });
   };

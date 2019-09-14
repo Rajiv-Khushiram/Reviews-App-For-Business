@@ -5,7 +5,7 @@ export const getBusiness = () => {
     const db = firebase.firestore();
     const {account = {}} = getState();
     const {business = false} = account;
-
+    console.log(account.business) 
     if(!business) return;
     
     const ref = db.collection('businesses').doc(account.business);

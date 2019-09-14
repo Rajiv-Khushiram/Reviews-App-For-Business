@@ -1,8 +1,10 @@
 const functions = require("firebase-functions");
+const twilio = require("twilio");
 
-const accountSid = functions.config().twilio.accountsid;
-const authToken = functions.config().twilio.authtoken;
+const accountSid =  "ACacbbee22de9d80c4235f07bce9940cf2"
+const authToken = "28c1420a642062164284e0faefb8125a"
 const twilioClient = twilio(accountSid, authToken);
+const FROM_NUMBER = "+61480021420";
 
 const {
     getCollection,

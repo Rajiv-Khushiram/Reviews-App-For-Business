@@ -2,7 +2,6 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const request = require("request-promise");
 const algoliasearch = require("algoliasearch");
-const twilio = require("twilio");
 const express = require("express");
 const cors = require("cors");
 
@@ -28,17 +27,16 @@ const {
   updateCollectionsforPhotoURL
 } = require("./handle-url-update-for-collections");
 
-const ALGOLIA_ID = functions.config().algolia.app_id;
-const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
-const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
+// const ALGOLIA_ID = functions.config().algolia.app_id;
+// const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
+// const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
 
-const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
+// const client = algoliasearch(ALGOLIA_ID, ALGOLIA_ADMIN_KEY);
 const api = express();
 
 const ALGOLIA_INDEX_PURCHASES = "purchases";
 const ALGOLIA_INDEX_CUSTOMERS = "customers";
-const DOMAINURL = "https://autoreviews.web.app";
-const FROM_NUMBER = "+61480021420";
+const DOMAINURL = "https://rajivkhushiram-reviews-project.web.app/";
 
 admin.initializeApp(functions.config().firebase);
 
@@ -90,7 +88,6 @@ exports.api = functions.https.onRequest(api);
 //   });
 
 const sendReviewSms = (snap, context) => {
-  var db = admin.firestore();
   const purchaseDocId = context.params.documentId;
   const { customer_id, business_id } = snap.data();
   return new Promise((resolve, reject) => {
@@ -140,7 +137,6 @@ const sendReviewSms = (snap, context) => {
 
 const sendImageSms = (snap, context) => {
   const photo_id = context.params.documentId;
-  var db = admin.firestore();
   let customerId = null;
   let customerPhoneRef = null;
   return new Promise((resolve, reject) => {
@@ -189,98 +185,98 @@ const sendImageSms = (snap, context) => {
   });
 };
 
-exports.indexPurchase = functions
-  .region("asia-northeast1")
-  .firestore.document("purchases/{purchaseId}")
-  .onCreate((snap, context) => {
-    // Get the note document
-    const purchase = snap.data();
+// exports.indexPurchase = functions
+//   .region("asia-northeast1")
+//   .firestore.document("purchases/{purchaseId}")
+//   .onCreate((snap, context) => {
+//     // Get the note document
+//     const purchase = snap.data();
 
-    // Add an 'objectID' field which Algolia requires
-    purchase.objectID = context.params.purchaseId;
+//     // Add an 'objectID' field which Algolia requires
+//     purchase.objectID = context.params.purchaseId;
 
-    // Write to the algolia index
-    const index = client.initIndex(ALGOLIA_INDEX_PURCHASES);
-    return index.saveObject(purchase);
-  });
+//     // Write to the algolia index
+//     const index = client.initIndex(ALGOLIA_INDEX_PURCHASES);
+//     return index.saveObject(purchase);
+//   });
 
-exports.updatePurchase = functions
-  .region("asia-northeast1")
-  .firestore.document("purchases/{purchaseId}")
-  .onUpdate((snap, context) => {
-    // Get the note document
-    const purchase = snap.data();
+// exports.updatePurchase = functions
+//   .region("asia-northeast1")
+//   .firestore.document("purchases/{purchaseId}")
+//   .onUpdate((snap, context) => {
+//     // Get the note document
+//     const purchase = snap.data();
 
-    // Add an 'objectID' field which Algolia requires
-    purchase.objectID = context.params.purchaseId;
+//     // Add an 'objectID' field which Algolia requires
+//     purchase.objectID = context.params.purchaseId;
 
-    // Write to the algolia index
-    const index = client.initIndex(ALGOLIA_INDEX_PURCHASES);
-    return index.saveObject(purchase);
-  });
+//     // Write to the algolia index
+//     const index = client.initIndex(ALGOLIA_INDEX_PURCHASES);
+//     return index.saveObject(purchase);
+//   });
 
-exports.unIndexPurchase = functions
-  .region("asia-northeast1")
-  .firestore.document("purchases/{purchaseId}")
-  .onDelete((snap, context) => {
-    // Get the note document
-    const purchase = snap.data();
+// exports.unIndexPurchase = functions
+//   .region("asia-northeast1")
+//   .firestore.document("purchases/{purchaseId}")
+//   .onDelete((snap, context) => {
+//     // Get the note document
+//     const purchase = snap.data();
 
-    // Add an 'objectID' field which Algolia requires
-    purchase.objectID = context.params.purchaseId;
+//     // Add an 'objectID' field which Algolia requires
+//     purchase.objectID = context.params.purchaseId;
 
-    // Write to the algolia index
-    const index = client.initIndex(ALGOLIA_INDEX_PURCHASES);
-    return index.deleteObject(purchase);
-  });
+//     // Write to the algolia index
+//     const index = client.initIndex(ALGOLIA_INDEX_PURCHASES);
+//     return index.deleteObject(purchase);
+//   });
 
-exports.indexCustomer = functions
-  .region("asia-northeast1")
-  .firestore.document("customers/{customerId}")
-  .onCreate((snap, context) => {
-    // Get the note document
-    const customer = snap.data();
+// exports.indexCustomer = functions
+//   .region("asia-northeast1")
+//   .firestore.document("customers/{customerId}")
+//   .onCreate((snap, context) => {
+//     // Get the note document
+//     const customer = snap.data();
 
-    // Add an 'objectID' field which Algolia requires
-    customer.objectID = context.params.customerId;
+//     // Add an 'objectID' field which Algolia requires
+//     customer.objectID = context.params.customerId;
 
-    // Write to the algolia index
-    const index = client.initIndex(ALGOLIA_INDEX_CUSTOMERS);
-    return index.saveObject(customer);
-  });
+//     // Write to the algolia index
+//     const index = client.initIndex(ALGOLIA_INDEX_CUSTOMERS);
+//     return index.saveObject(customer);
+//   });
 
-exports.updateCustomer = functions
-  .region("asia-northeast1")
-  .firestore.document("customers/{customerId}")
-  .onUpdate((snap, context) => {
-    if (!snap.exists) {
-      return null;
-    }
-    // Get the note document
-    const customer = snap.data();
+// exports.updateCustomer = functions
+//   .region("asia-northeast1")
+//   .firestore.document("customers/{customerId}")
+//   .onUpdate((snap, context) => {
+//     if (!snap.exists) {
+//       return null;
+//     }
+//     // Get the note document
+//     const customer = snap.data();
 
-    // Add an 'objectID' field which Algolia requires
-    customer.objectID = context.params.customerId;
+//     // Add an 'objectID' field which Algolia requires
+//     customer.objectID = context.params.customerId;
 
-    // Write to the algolia index
-    const index = client.initIndex(ALGOLIA_INDEX_CUSTOMERS);
-    return index.saveObject(customer);
-  });
+//     // Write to the algolia index
+//     const index = client.initIndex(ALGOLIA_INDEX_CUSTOMERS);
+//     return index.saveObject(customer);
+//   });
 
-exports.unIndexCustomer = functions
-  .region("asia-northeast1")
-  .firestore.document("customers/{customerId}")
-  .onDelete((snap, context) => {
-    // Get the note document
-    const customer = snap.data();
+// exports.unIndexCustomer = functions
+//   .region("asia-northeast1")
+//   .firestore.document("customers/{customerId}")
+//   .onDelete((snap, context) => {
+//     // Get the note document
+//     const customer = snap.data();
 
-    // Add an 'objectID' field which Algolia requires
-    customer.objectID = context.params.customerId;
+//     // Add an 'objectID' field which Algolia requires
+//     customer.objectID = context.params.customerId;
 
-    // Write to the algolia index
-    const index = client.initIndex(ALGOLIA_INDEX_CUSTOMERS);
-    return index.deleteObject(customer);
-  });
+//     // Write to the algolia index
+//     const index = client.initIndex(ALGOLIA_INDEX_CUSTOMERS);
+//     return index.deleteObject(customer);
+//   });
 
 const addTimestampToDocument = collectionType => {
   return (snap, context) => {
@@ -396,11 +392,20 @@ function createRandomId(length) {
   return result;
 }
 
-exports.scheduledFunction = functions.pubsub.schedule('5 18 * * *')
-.timeZone('Australia/Melbourne') // Users can choose timezone - default is America/Los_Angeles
-.onRun((context) => {
-  sendMessages()
-  console.log("Sent Messages Terminated")
-  return null;
-});
+// exports.scheduledFunction = functions.pubsub.schedule('5 18 * * *')
+// .timeZone('Australia/Melbourne') // Users can choose timezone - default is America/Los_Angeles
+// .onRun((context) => {
+//   sendMessages()
+//   console.log("Sent Messages Terminated")
+//   return null;
+// });
 
+
+exports.scheduledFunction = functions.pubsub
+  .schedule("every 30 minutes")
+  .onRun(context => {
+    sendMessages();
+    sendMessages()
+    console.log("Sent Messages Terminated")
+    return null;
+  });
