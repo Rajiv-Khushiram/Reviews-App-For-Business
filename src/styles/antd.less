@@ -1,0 +1,45 @@
+@import "../../node_modules/antd/dist/antd.less";
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0 10px;
+  justify-content: center;
+  height: 100vh;
+  max-width: 500px;
+  margin: 0 auto;
+  max-height: 100%;
+
+  @media(max-width: 500px) {
+    height: 50vh;
+  }
+}
+
+.review-container {
+  width: 20rem;
+  margin: auto;
+  margin-top: 5rem;
+}
+
+.customer-container {
+  width: 70%;
+  margin: auto;
+  margin-top: 5rem;
+}
+
+.navbar {
+  text-align: right;
+}
+
+@media(max-width: 600px) {
+  .ant-modal {
+    max-width: 100vw !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important
+  }
+}
+
+.ant-modal-footer {
+  display: none;
+}

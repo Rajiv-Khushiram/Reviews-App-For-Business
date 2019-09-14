@@ -2,7 +2,7 @@ export const sendReview = review => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const businessId = getState().account ? getState().account.business : null
     Promise.all([
-      addCustomerDoc(review, businessId, getFirestore(), dispatch).then(() => {
+      addCustomerDoc(review, businessId, getFirestore(), getState(), dispatch).then(() => {
         addPurchaseDoc(review, getFirestore(), dispatch, getState())
           .then(() => {
             addPhotoToBucketAndFs(
@@ -23,15 +23,17 @@ export const sendReview = review => {
   };
 };
 
-const addCustomerDoc = (form, businessId, getFirestore, dispatch) => {
+const addCustomerDoc = (form, businessId, getFirestore, getState, dispatch) => {
   return new Promise((resolve, reject) => {
     getFirestore
       .collection("customers")
       .add({
         first_name: form.first_name,
+        account_id : getState.firebase.auth.uid,
         last_name: form.last_name,
         phone: form.phone,
-        business_id: businessId
+        business_id: businessId,
+        created: new Date()
       })
       .then(customerRef => {
         dispatch({ type: "CREATE_CUSTOMER", data: customerRef });
@@ -49,11 +51,13 @@ const addPurchaseDoc = (form, getFirestore, dispatch, getState) => {
       .collection("purchases")
                     .add({
         business_id: getState.account.business,
+        account_id : getState.firebase.auth.uid,
         comment: form.comments,
         customer_id: getState.review.customer,
-        product_model: form.product_model,
-        product_make: form.product_make,
-        product_year: form.product_year
+        product_model: form.selected.model,
+        product_make: form.selected.make,
+        product_year: form.selected.year,
+        created: new Date()
                     })
       .then(purchaseRef => {
         resolve("Purchase created");
@@ -77,20 +81,22 @@ const addPhotoToBucketAndFs = (
     const reviewPictureStore = getFirebase
       .storage()
       .ref()
-      .child("customer_product_photos/" + id);
+      .child("photos/" + id);
     if (pictureUri) {
       getFirebase
         .storage()
         .ref()
-        .child("customer_product_photos/" + id)
+        .child("photos/" + id)
         .putString(pictureUri, "data_url")
         .then(() => {
           reviewPictureStore
             .getDownloadURL()
             .then(url => {
-              getFirestore.collection("customer_product_photos").add({
+              getFirestore.collection("photos").add({
                 purchase: id,
-                picture_url: url
+                account_id : getState.firebase.auth.uid,
+                picture_url: url,
+                created: new Date()
               });
             })
             .then(() => {

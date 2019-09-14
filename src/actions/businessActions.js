@@ -3,9 +3,12 @@ export const getBusiness = () => {
     console.log('Starting getBusiness action')
     const firebase = getFirebase();
     const db = firebase.firestore();
-    console.log(getState())
-    const account = getState().account;
-    const ref = db.collection('business').doc(account.business);
+    const {account = {}} = getState();
+    const {business = false} = account;
+
+    if(!business) return;
+    
+    const ref = db.collection('businesses').doc(account.business);
     
     dispatch({ type: "GET_BUSINESS", id: account.business });
 

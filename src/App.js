@@ -1,17 +1,21 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import './index.css';
+
 import Navbar from './components/Navbar';
-import Dashboard from './components/dashboard/Dashboard';
 import ReviewForm from './components/review-form'
 import SuccessReviewForm from './components/successReviewForm'
 import SignIn from './components/auth/SignIn';
 import TargetCustomerPage from './components/target-customer-page';
-// import Widget from './components/widget';
+import AllPhotos from './components/AllPhotos';
+import Debug from './components/Debug';
+import Settings from './components/Settings';
 import { connect } from 'react-redux';
-import SMSCampaignPage from './components/sms-campaign';
 
-import './index.css';
+import { getAccount } from './actions/accountActions';
+import { getBusiness } from "./actions/businessActions";
+import { getPhoto } from "./actions/photoActions";
+
+import "./styles/antd.less";
 
 const ProtectedRoute = ({ isAllowed, ...props }) =>
      isAllowed
@@ -21,17 +25,19 @@ const ProtectedRoute = ({ isAllowed, ...props }) =>
 class App extends Component {
   render() {
     const { auth } = this.props;
+
     return (
       <BrowserRouter>
         <div className="App">
           <Navbar />
           <Switch>
-            <ProtectedRoute isAllowed = {auth.uid} exact path='/' component={Dashboard} />
-            <ProtectedRoute isAllowed = {auth.uid} exact path='/review-form' component={ReviewForm} />
+            <ProtectedRoute isAllowed = {auth.uid} exact path='/' component={ReviewForm} />
+            <ProtectedRoute isAllowed = {auth.uid} exact path='/new-review' component={ReviewForm} />
             <ProtectedRoute isAllowed = {auth.uid} exact path='/review-form-success' component={SuccessReviewForm} />
-            <ProtectedRoute isAllowed = {auth.uid} exact path='/customer-page' component={TargetCustomerPage} />
-            <ProtectedRoute isAllowed = {auth.uid}  exact path='/sms-campaign-form' component={SMSCampaignPage} />
-            
+            <ProtectedRoute isAllowed = {auth.uid} exact path='/all-photos' component={AllPhotos} />            
+            <ProtectedRoute isAllowed = {auth.uid} exact path='/settings' component={Settings} />            
+            <ProtectedRoute isAllowed = {auth.uid} exact path='/debug' component={Debug} />            
+            <ProtectedRoute isAllowed = {auth.uid} exact path='/sms-campaign' component={TargetCustomerPage} />            
             <Route path='/signin' component={SignIn} />
           </Switch>
         </div>
@@ -42,8 +48,17 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return{
-      auth:state.firebase.auth
+      auth:state.firebase.auth,
   }
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = dispatch => {
+  return {
+    getBusiness: () => dispatch(getBusiness()),
+    getAccount: () => dispatch(getAccount()),
+    getPhoto: () => dispatch(getPhoto()),
+    dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

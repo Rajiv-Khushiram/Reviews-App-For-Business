@@ -10,15 +10,26 @@ import { reduxFirestore, getFirestore } from "redux-firestore";
 import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import fbConfig from "./config/fbConfig";
 
+const composeEnhancers =
+  process.env.NODE_ENV !== 'production' &&
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+      maxAge: 50,
+      serialize: false
+    })
+    : compose
+
 const store = createStore(
   rootReducer,
-  compose(
+  composeEnhancers(
     applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
     reduxFirestore(fbConfig),
     reactReduxFirebase(fbConfig, {
       attachAuthIsReady: true
-    })
-      )
+    }),
+    // process.env.NODE_ENV === "development" ? (window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()) : () => {},
+  ),
 );
 
 store.firebaseAuthIsReady.then(() => {

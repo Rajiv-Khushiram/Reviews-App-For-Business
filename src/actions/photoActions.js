@@ -14,7 +14,7 @@ export const getPhoto = () => {
                 return;
             }
             purchaseRef.forEach(purchasedoc => {
-                db.collection('customer_product_photos').where('purchase','==',purchasedoc.id)
+                db.collection('photos').where('purchase','==',purchasedoc.id)
                 .get().then(photo => {
                     if(photo.empty) {
                         console.log('No matching photo documents.');
