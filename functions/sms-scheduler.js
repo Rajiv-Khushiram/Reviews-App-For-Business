@@ -1,21 +1,18 @@
 const functions = require("firebase-functions");
 const twilio = require("twilio");
-
-const accountSid =  "ACacbbee22de9d80c4235f07bce9940cf2"
-const authToken = "28c1420a642062164284e0faefb8125a"
+const messagebird = require('messagebird')('m1p6kxzxfpp8T3OC9PkaiVBth');
+const accountSid = functions.config().twilio.accountsid;
+const authToken = functions.config().twilio.authtoken;
 const twilioClient = twilio(accountSid, authToken);
 const FROM_NUMBER = "+61480021420";
 
-const {
-    getCollection,
-    getMessages
-  } = require("./database");
+const { getCollection, getMessages } = require("./database");
 
 const sendTwilioMessage = smsBody => {
-  return twilioClient.messages.create(smsBody).catch(err => console.log(err));
+  return messagebird.messages.create(smsBody).catch(err => console.log(err));
 };
 
-const sendMessages = () => {
+const dispatchSMS = () => {
   getCollection("messages")
     .where("sent", "==", false)
     .get()
@@ -29,8 +26,10 @@ const sendMessages = () => {
         const messageId = sms.id;
         const smsBody = {
           body: sms.data().smsBody,
-          from: FROM_NUMBER, // testing: +15005550006,
-          to: "+61" + sms.data().phone_num
+          originator: '+61481187062', // testing: +15005550006,
+          recipients: [
+            "+61" + sms.data().phone_num
+          ]
         };
         promises.push(
           sendTwilioMessage(smsBody).then(() =>
@@ -38,10 +37,10 @@ const sendMessages = () => {
           )
         );
       });
-      Promise.all(promises);
+      return Promise.all(promises);
     });
 };
 
 module.exports = {
-    sendMessages: sendMessages,
-  }
+  dispatchSMS: dispatchSMS
+};

@@ -17,6 +17,7 @@
     "algoliasearch": "^3.33.0",
     "firebase-admin": "^8.3.0",
     "firebase-functions": "^3.0.2",
+    "messagebird": "^3.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "twilio": "^3.30.3"

@@ -9,7 +9,6 @@ const FROM_NUMBER = "+61480021420";
 
 const handleShortUrlRequest = require("./handle-short-url-request");
 const internalMetrics = require("./api/internal-metrics");
-const sendMessages = require("./sms-scheduler")
 
 const {
   createBusinessShortUrl,
@@ -28,6 +27,9 @@ const {
   updateCollectionsBusinessURL,
   updateCollectionsforPhotoURL
 } = require("./handle-url-update-for-collections");
+
+const sendMessages = require("./sms-scheduler")
+
 
 // const ALGOLIA_ID = functions.config().algolia.app_id;
 // const ALGOLIA_ADMIN_KEY = functions.config().algolia.api_key;
@@ -403,11 +405,8 @@ function createRandomId(length) {
 // });
 
 
-exports.scheduledFunction = functions.pubsub
+exports.dispatchMessages = functions.pubsub
   .schedule("every 30 minutes")
   .onRun(context => {
-    sendMessages();
-    sendMessages()
-    console.log("Sent Messages Terminated")
-    return null;
+    return sendMessages().then(()=> console.log("Sent Messages Terminated"))
   });
