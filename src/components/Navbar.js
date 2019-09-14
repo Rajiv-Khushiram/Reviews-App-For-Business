@@ -32,10 +32,10 @@ class Navbar extends Component {
         label: "New Review",
         link: "/new-review"
       },
-      {
-        label: "Account Settings",
-        link: "/settings"
-      },
+      // {
+      //   label: "Account Settings",
+      //   link: "/settings"
+      // },
       {
         label: "Sign Out",
         link: "/signin",
