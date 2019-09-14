@@ -1,0 +1,111 @@
+[debug] [2019-09-14T16:23:36.224Z] ----------------------------------------------------------------------
+[debug] [2019-09-14T16:23:36.227Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Rajiv\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js emulators:start --only firestore,functions
+[debug] [2019-09-14T16:23:36.228Z] CLI Version:   7.3.2
+[debug] [2019-09-14T16:23:36.228Z] Platform:      win32
+[debug] [2019-09-14T16:23:36.228Z] Node Version:  v10.16.0
+[debug] [2019-09-14T16:23:36.229Z] Time:          Sun Sep 15 2019 02:23:36 GMT+1000 (Australian Eastern Standard Time)
+[debug] [2019-09-14T16:23:36.229Z] ----------------------------------------------------------------------
+[debug] 
+[info] i  Starting emulators: ["functions","firestore"]
+[warn] !  Your requested "node" version "8" doesn't match your global version "10"
+[info] +  functions: Emulator started at http://localhost:5001
+[warn] !  Firestore rules file C:\Users\Rajiv\Documents\GitHub\Reviews-App-For-Business\firestore.rules specified in firebase.json does not exist, starting Firestore emulator without rules.
+[info] i  firestore: Serving WebChannel traffic on at http://localhost:5003
+[debug] [2019-09-14T16:23:36.749Z] Ignoring unsupported arg: projectId
+[debug] [2019-09-14T16:23:36.750Z] Ignoring unsupported arg: auto_download
+[debug] [2019-09-14T16:23:36.750Z] Starting emulator firestore with command {"binary":"java","args":["-Duser.language=en","-jar","C:\\Users\\Rajiv\\.cache\\firebase\\emulators\\cloud-firestore-emulator-v1.8.4.jar","--host","localhost","--port",5002,"--functions_emulator","localhost:5001","--webchannel_port",5003],"optionalArgs":["port","webchannel_port","host","rules","functions_emulator"]}
+[info] i  firestore: Emulator logging to firestore-debug.log
+[debug] [2019-09-14T16:23:39.459Z] API endpoint: http://
+[debug] [2019-09-14T16:23:39.459Z] localhost:5002
+WebChannel endpoint: http://localhost:5003
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+[debug] [2019-09-14T16:23:39.459Z] 
+   export FIRESTORE_EMULATOR_HOST=localhost:5002
+
+Dev App Server is now running.
+
+
+[info] +  firestore: Emulator started at http://localhost:5002
+[info] i  firestore: For testing set FIRESTORE_EMULATOR_HOST=localhost:5002
+[info] i  functions: Watching "C:\Users\Rajiv\Documents\GitHub\Reviews-App-For-Business\functions" for Cloud Functions...
+[debug] [2019-09-14T16:23:40.127Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions","node_version":"10.16.0"}
+[debug] [2019-09-14T16:23:40.127Z] [runtime-status] Disabled runtime features: undefined {}
+[debug] [2019-09-14T16:23:40.131Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.5.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-14T16:23:40.133Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-14T16:23:40.539Z] [runtime-status] Found google-gax at C:\Users\Rajiv\Documents\GitHub\Reviews-App-For-Business\functions\node_modules\google-gax\build\src\index.js {}
+[debug] [2019-09-14T16:23:40.540Z] [runtime-status] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"},{"name":"google-gax","status":"mocked"}]
+[debug] [2019-09-14T16:23:40.599Z] [runtime-status] Checked functions.config() {"config":{}}
+[debug] [2019-09-14T16:23:40.600Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-14T16:23:40.601Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.5.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-14T16:23:40.662Z] [runtime-status] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.5.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-admin\\lib\\index.js"}}
+[warn] !  C:\Users\Rajiv\Documents\GitHub\Reviews-App-For-Business\functions\index.js:66
+api.get("/addData" addData)
+        ^^^^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at Module._compile (internal/modules/cjs/loader.js:721:23)
+    at Object.Module._extensions..js (internal/modules/cjs/loader.js:787:10)
+    at Module.load (internal/modules/cjs/loader.js:653:32)
+    at tryModuleLoad (internal/modules/cjs/loader.js:593:12)
+    at Function.Module._load (internal/modules/cjs/loader.js:585:3)
+    at Module.require (internal/modules/cjs/loader.js:690:17)
+    at require (internal/modules/cjs/helpers.js:25:18)
+    at C:\Users\Rajiv\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:677:33
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\Rajiv\AppData\Roaming\npm\node_modules\firebase-tools\lib\emulator\functionsEmulatorRuntime.js:4:58)
+[warn] !  We were unable to load your functions code. (see above)
+[debug] [2019-09-14T16:23:55.367Z] File C:\Users\Rajiv\Documents\GitHub\Reviews-App-For-Business\functions\index.js changed, reloading triggers
+[debug] [2019-09-14T16:23:57.095Z] [runtime-status] Functions runtime initialized. {"cwd":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions","node_version":"10.16.0"}
+[debug] [2019-09-14T16:23:57.095Z] [runtime-status] Disabled runtime features: undefined {}
+[debug] [2019-09-14T16:23:57.099Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.5.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-14T16:23:57.100Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-14T16:23:57.521Z] [runtime-status] Found google-gax at C:\Users\Rajiv\Documents\GitHub\Reviews-App-For-Business\functions\node_modules\google-gax\build\src\index.js {}
+[debug] [2019-09-14T16:23:57.522Z] [runtime-status] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"},{"name":"google-gax","status":"mocked"}]
+[debug] [2019-09-14T16:23:57.578Z] [runtime-status] Checked functions.config() {"config":{}}
+[debug] [2019-09-14T16:23:57.578Z] [runtime-status] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.2.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-functions\\lib\\index.js"}
+[debug] [2019-09-14T16:23:57.579Z] [runtime-status] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.5.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-admin\\lib\\index.js"}
+[debug] [2019-09-14T16:23:57.624Z] [runtime-status] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.5.0","resolution":"C:\\Users\\Rajiv\\Documents\\GitHub\\Reviews-App-For-Business\\functions\\node_modules\\firebase-admin\\lib\\index.js"}}
+[debug] [2019-09-14T16:23:58.962Z] [runtime-status] config() parent accessed! {"parentKey":"firebase","parentConfig":{}}
+[debug] [2019-09-14T16:23:58.963Z] [runtime-status] initializeApp(DEFAULT) {"databaseURL":"https://rajivkhushiram-reviews-project.firebaseio.com","storageBucket":"rajivkhushiram-reviews-project.appspot.com","projectId":"rajivkhushiram-reviews-project"}
+[debug] [2019-09-14T16:23:59.037Z] addFirestoreTrigger "{\"eventTrigger\":{\"resource\":\"projects/rajivkhushiram-reviews-project/databases/(default)/documents/accounts/{documentId}\",\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2019-09-14T16:23:59.096Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.377Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.684Z] addFirestoreTrigger "{\"eventTrigger\":{\"resource\":\"projects/rajivkhushiram-reviews-project/databases/(default)/documents/businesses/{documentId}\",\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2019-09-14T16:23:59.689Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.702Z] addFirestoreTrigger "{\"eventTrigger\":{\"resource\":\"projects/rajivkhushiram-reviews-project/databases/(default)/documents/customers/{documentId}\",\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2019-09-14T16:23:59.707Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.720Z] addFirestoreTrigger "{\"eventTrigger\":{\"resource\":\"projects/rajivkhushiram-reviews-project/databases/(default)/documents/photos/{documentId}\",\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2019-09-14T16:23:59.728Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.745Z] addFirestoreTrigger "{\"eventTrigger\":{\"resource\":\"projects/rajivkhushiram-reviews-project/databases/(default)/documents/purchases/{documentId}\",\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2019-09-14T16:23:59.749Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.760Z] addFirestoreTrigger "{\"eventTrigger\":{\"resource\":\"projects/rajivkhushiram-reviews-project/databases/(default)/documents/purchases/{documentId}\",\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2019-09-14T16:23:59.764Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.773Z] addFirestoreTrigger "{\"eventTrigger\":{\"resource\":\"projects/rajivkhushiram-reviews-project/databases/(default)/documents/photos/{documentId}\",\"eventType\":\"providers/cloud.firestore/eventTypes/document.create\",\"service\":\"firestore.googleapis.com\"}}"
+[debug] [2019-09-14T16:23:59.777Z] Sep 15, 2019 2:23:59 AM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+
+[debug] [2019-09-14T16:23:59.788Z] Unsupported trigger: {"schedule":{"schedule":"every 1 minutes"},"eventTrigger":{"resource":"projects/rajivkhushiram-reviews-project/topics","eventType":"google.pubsub.topic.publish","service":"pubsub.googleapis.com"},"labels":{"deployment-scheduled":"true"},"name":"dispatchBirdMessages","entryPoint":"dispatchBirdMessages"}
+[info] +  functions[api]: http function initialized (http://localhost:5001/rajivkhushiram-reviews-project/us-central1/api).
+[info] +  functions[addTimestampToAccounts]: firestore function initialized.
+[info] +  functions[addTimestampToBusinesses]: firestore function initialized.
+[info] +  functions[addTimestampToCustomers]: firestore function initialized.
+[info] +  functions[addTimestampToPhotos]: firestore function initialized.
+[info] +  functions[addTimestampToPurchases]: firestore function initialized.
+[info] +  functions[handleNewPurchase]: firestore function initialized.
+[info] +  functions[handleNewPhoto]: firestore function initialized.
+[info] i  functions[dispatchBirdMessages]: function ignored because the pubsub.googleapis.com emulator does not exist or is not running.

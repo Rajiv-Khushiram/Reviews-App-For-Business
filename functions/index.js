@@ -6,7 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const FROM_NUMBER = "+61480021420";
 
-
+const addData = require("./addData")
 const handleShortUrlRequest = require("./handle-short-url-request");
 const internalMetrics = require("./api/internal-metrics");
 
@@ -28,7 +28,7 @@ const {
   updateCollectionsforPhotoURL
 } = require("./handle-url-update-for-collections");
 
-const sendMessages = require("./sms-scheduler")
+const { dispatchSMS, doSomething } = require("./sms-scheduler")
 
 
 // const ALGOLIA_ID = functions.config().algolia.app_id;
@@ -62,6 +62,8 @@ api.use(
 // API
 api.get("/api/internal/metrics", internalMetrics);
 api.get("/r/:id", handleShortUrlRequest);
+api.get("/sendMessages", dispatchSMS)
+api.get("/addData", addData)
 
 exports.api = functions.https.onRequest(api);
 
@@ -405,8 +407,8 @@ function createRandomId(length) {
 // });
 
 
-exports.dispatchMessages = functions.pubsub
-  .schedule("every 30 minutes")
+exports.dispatchBirdMessages = functions.pubsub
+  .schedule("every 1 minutes")
   .onRun(context => {
-    return sendMessages().then(()=> console.log("Sent Messages Terminated"))
+    return dispatchSMS()
   });

@@ -5,13 +5,12 @@ import 'firebase/storage';
 
 // Initialize Firebase
 var firebaseConfig = {
-  apiKey: "AIzaSyCeos02Q0Yhe-_aZrbm9fBNOhYhK_JuHcI",
-  authDomain: "rajivkhushiram-reviews-project.firebaseapp.com",
-  databaseURL: "https://rajivkhushiram-reviews-project.firebaseio.com",
-  projectId: "rajivkhushiram-reviews-project",
-  storageBucket: "rajivkhushiram-reviews-project.appspot.com",
-  messagingSenderId: "838832911035",
-  appId: "1:838832911035:web:c2da541766007e26"
+  apiKey: process.env.REACT_APP_FIREBASE_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId:process.env.REACT_APP_FIRE_BASE_SENDER_ID
 };
 firebase.initializeApp(firebaseConfig);
 

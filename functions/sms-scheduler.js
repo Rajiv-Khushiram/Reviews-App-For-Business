@@ -1,43 +1,52 @@
 const functions = require("firebase-functions");
 const twilio = require("twilio");
-const messagebird = require('messagebird')('m1p6kxzxfpp8T3OC9PkaiVBth');
-const accountSid = functions.config().twilio.accountsid;
-const authToken = functions.config().twilio.authtoken;
-const twilioClient = twilio(accountSid, authToken);
+const messagebird = require("messagebird")("gdOLCcZvia3OaD1wHcWcmR33X");
+// const accountSid = functions.config().twilio.accountsid;
+// const authToken = functions.config().twilio.authtoken;
+// const twilioClient = twilio(accountSid, authToken);
 const FROM_NUMBER = "+61480021420";
 
 const { getCollection, getMessages } = require("./database");
 
-const sendTwilioMessage = smsBody => {
-  return messagebird.messages.create(smsBody).catch(err => console.log(err));
+const sendTwilioMessage = params => {
+  return new Promise((resolve, reject) => {
+    return messagebird.messages.create(params, function(err, response) {
+      if (err) {
+        console.log(err);
+        return null;
+      }
+      console.log(response);
+      resolve();
+      return null;
+    });
+  });
 };
 
 const dispatchSMS = () => {
-  getCollection("messages")
+  return getCollection("messages")
     .where("sent", "==", false)
     .get()
-    .then(snapshot => {
-      if (snapshot.empty) {
+    .then(querySnapshot => {
+      if (querySnapshot.empty) {
         console.log("No matching documents.");
-        return;
+        return null
       }
       let promises = [];
-      snapshot.forEach(sms => {
-        const messageId = sms.id;
-        const smsBody = {
-          body: sms.data().smsBody,
-          originator: '+61481187062', // testing: +15005550006,
-          recipients: [
-            "+61" + sms.data().phone_num
-          ]
-        };
-        promises.push(
-          sendTwilioMessage(smsBody).then(() =>
+      querySnapshot
+        .forEach(sms => {
+          const messageId = sms.id;
+          const params = {
+            originator: "+61481187062",
+            recipients: ["+61481187062"],
+            body: sms.data().smsBody
+          };
+          console.log(messageId);
+          promises.push(
+          sendTwilioMessage(params).then(() =>
             getMessages(messageId).update({ sent: true })
-          )
-        );
-      });
-      return Promise.all(promises);
+          ))
+        })
+          return  Promise.all(promises)
     });
 };
 
