@@ -9,28 +9,31 @@ module.exports = function(req, res) {
   return getUrls(url_id)
     .get()
     .then(urlDoc => {
-      if (!urlDoc.exists || !urlDoc.data().hasOwnProperty('clicks')) {
-        return res.status(404).send("Some Error Happened");
+      if (!urlDoc.exists) {
+        return res.status(404).send("Looks like that link is no longer valid. Sorry about that.");
       }
-      getUrls(url_id).update({ clicks: urlDoc.data().clicks + 1 });
-      if (urlDoc.data().type === "business" && urlDoc.data().hasOwnProperty('business_id') ) {
-        return getBusinesses(urlDoc.data().business_id)
+      const urlData = urlDoc.data();
+      getUrls(url_id).update({ clicks: (urlData.clicks || 0) + 1 });
+      if (urlDatatype === "business" && urlData.business_id ) {
+        return getBusinesses(urlData.business_id)
           .get()
           .then(businessDoc => {
-            if (!businessDoc.exists || !businessDoc.data().hasOwnProperty('review_url')) {
+            const businessData = businessDoc.data();
+            if (!businessDoc.exists || !businessData.review_url) {
               return res.status(404).send("Error getting Review URL");
             }
-            return res.redirect(businessDoc.data().review_url);
+            return res.redirect(businessData.review_url);
           });
       }
-      if (urlDoc.data().type === "image" && urlDoc.data().hasOwnProperty('photo_id')) {
+      if (urlData.type === "image" && urlData.photo_id) {
         return getPhotos(urlDoc.data().photo_id)
           .get()
           .then(photoDoc => {
-            if (!photoDoc.exists || !photoDoc.data().hasOwnProperty('picture_url')) {
+            const photoData = photoDoc.data();
+            if (!photoDoc.exists || !photoData.picture_url) {
               return res.status(404).send("Error getting Photo ");
             }
-            return res.redirect(photoDoc.data().picture_url);
+            return res.redirect(photoData.picture_url);
           });
       }
     })

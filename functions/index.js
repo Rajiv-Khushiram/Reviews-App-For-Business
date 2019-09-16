@@ -398,10 +398,10 @@ function createRandomId(length) {
   return result;
 }
 
-exports.scheduledFunction = functions.pubsub.schedule('5 13 * * *')
+exports.scheduledFunction = functions.pubsub.schedule('00 13 * * *')
 .timeZone('Australia/Melbourne') // Users can choose timezone - default is America/Los_Angeles
 .onRun((context) => {
-  sendMessages()
+  dispatchSMS()
   console.log("Sent Messages Terminated")
   return null;
 });

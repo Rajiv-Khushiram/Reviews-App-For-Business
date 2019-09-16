@@ -9,6 +9,7 @@ const storeURL = urlType => (generatedId, businessId, accountId, photoId) => {
   };
   if (photoId !== undefined) {
     data = { ...data, photo_id: photoId };
+    return getUrls(generatedId).set(data);
   }
   return getUrls(generatedId).set(data);
 };
