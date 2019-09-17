@@ -336,16 +336,16 @@ const incrementAllMessagesCounts = ({ business_id, account_id }) => {
   ]);
 };
 
-const updatePhotoCount = ({ business_id, account_id, purchase }) => {
-  let purchaseRef = getPurchases(purchase);
-  return purchaseRef.get().then(doc => {
-    if (!doc.exists || !business_id || !account_id) {
+const updatePhotoCount = ({ purchase }) => {
+  return getPurchasesDoc(purchase).then(purchaseDoc => {
+    const { business_id, account_id} = purchaseDoc
+    if ( !business_id || !account_id) {
       return Promise.resolve();
     }
     return incrementPhotosCounter("businesses", business_id ).then(() =>
       incrementPhotosCounter("accounts",  account_id )
     );
-  });
+  }).catch(error => console.log(error));
 };
 
 exports.addTimestampToAccounts = functions
@@ -390,15 +390,11 @@ exports.handleNewPhoto = functions
   .firestore.document("/photos/{documentId}")
   .onCreate((snap, context) => {
     const { account_id, purchase } = snap.data();
-    let business_id = null;
     if (!purchase) {
       return null;
     }
     return sendImageSms(snap, context).then(() => {
-      return getPurchasesDoc(purchase).then(purchaseDoc => {
-        business_id = purchaseDoc.business_id;
-        return updatePhotoCount({ business_id, account_id, purchase });
-      });
+        return updatePhotoCount({ purchase });
     });
   });
 
