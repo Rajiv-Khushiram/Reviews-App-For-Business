@@ -17,19 +17,11 @@ const {
 const {
   getCollection,
   getDocument,
-  getBusinesses,
-  getCustomers,
   getPurchases,
-  getPhotos,
   getMessages,
-  getCollectionDocument,
-  getAccountsDoc,
   getBusinessesDoc,
   getCustomersDoc,
-  getMessagesDoc,
   getPurchasesDoc,
-  getPhotosDoc,
-  getUrlsDoc
 } = require("./database");
 const {
   updateCollectionsBusinessURL,
@@ -397,18 +389,16 @@ exports.handleNewPhoto = functions
   .region("asia-northeast1")
   .firestore.document("/photos/{documentId}")
   .onCreate((snap, context) => {
-    let { business_id, account_id, purchase } = snap.data();
+    const { account_id, purchase } = snap.data();
+    let business_id = null;
     if (!purchase) {
       return null;
     }
     return sendImageSms(snap, context).then(() => {
-      return getPurchasesDoc(purchase)
-        .then(purchaseDoc => {
-          business_id = purchaseDoc.business_id;
-        })
-        .then(() => {
-          return updatePhotoCount({ business_id, account_id, purchase });
-        });
+      return getPurchasesDoc(purchase).then(purchaseDoc => {
+        business_id = purchaseDoc.business_id;
+        return updatePhotoCount({ business_id, account_id, purchase });
+      });
     });
   });
 
