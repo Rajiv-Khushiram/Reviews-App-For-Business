@@ -12,7 +12,24 @@ const docRef = type => id => {
     .doc(id);
 };
 
-module.exports = {
+const getCollectionDocument = type => id => {
+  return new Promise((resolve, reject) => {
+    return  getCollection(type)
+      .doc(id)
+      .get()
+      .then(response => {
+        const data = response.data() || "Document does not Exist"
+        if (!response.exists) {
+          return reject(data);
+        }
+        return resolve(data);
+      });
+  })
+};
+
+
+
+module.exports = {  
   getCollection: getCollection,
   getDocument: docRef,
   getAccounts: docRef('accounts'),
@@ -21,5 +38,14 @@ module.exports = {
   getPurchases: docRef("purchases"),
   getPhotos: docRef('photos'),
   getUrls: docRef('urls'),
-  getMessages: docRef('messages')
+  getMessages: docRef('messages'),
+  getCollectionDocument: getCollectionDocument,
+  getAccountsDoc: getCollectionDocument('accounts'),
+  getBusinessesDoc: getCollectionDocument('businesses'),
+  getCustomersDoc: getCollectionDocument('customers'),
+  getMessagesDoc: getCollectionDocument('urls'),
+  getPurchasesDoc: getCollectionDocument('purchases'),
+  getPhotosDoc: getCollectionDocument('photos'),
+  getUrlsDoc: getCollectionDocument('urls')
+
 }

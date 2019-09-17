@@ -21,14 +21,22 @@ const {
   getCustomers,
   getPurchases,
   getPhotos,
-  getMessages
+  getMessages,
+  getCollectionDocument,
+  getAccountsDoc,
+  getBusinessesDoc,
+  getCustomersDoc,
+  getMessagesDoc,
+  getPurchasesDoc,
+  getPhotosDoc,
+  getUrlsDoc
 } = require("./database");
 const {
   updateCollectionsBusinessURL,
   updateCollectionsforPhotoURL
 } = require("./handle-url-update-for-collections");
 
-const { dispatchSMS, doSomething } = require("./sms-scheduler")
+const { dispatchSMS } = require("./sms-scheduler")
 
 
 // const ALGOLIA_ID = functions.config().algolia.app_id;
@@ -103,16 +111,12 @@ const sendReviewSms = (snap, context) => {
       );
       return resolve();
     }
-    getCustomers(customer_id)
-      .get()
-      .then(function(customerSnapshot) {
-        const { first_name } = customerSnapshot.data();
-        const { phone } = customerSnapshot.data();
-        const { account_id } = customerSnapshot.data();
-        return getBusinesses(business_id)
-          .get()
-          .then(function(businessSnapshot) {
-            const { review_url, name } = businessSnapshot.data();
+    getCustomersDoc(customer_id)
+      .then(customerSnapshot => {
+        const { first_name = '', phone = null, account_id = null } = customerSnapshot;
+        return getBusinessesDoc(business_id)
+          .then(businessSnapshot => {
+            const { review_url, name } = businessSnapshot
             const generatedId = createRandomId(4);
             const redirectUrl = DOMAINURL + "/r/" + generatedId;
             if (review_url) {
@@ -135,6 +139,17 @@ const sendReviewSms = (snap, context) => {
                 sent: false
               });
               return resolve()
+              //  twilioClient.messages
+              //   .create(smsBody)
+              //   .then(() =>
+              //     getCustomers(customer_id)
+              //       .update({ sent_review: true })
+              //       .then(() => resolve())
+              //   )
+              //   .catch(err => {
+              //     console.log(`err`, err);
+              //     reject(err);
+              //   });
             }
           });
       });
@@ -143,40 +158,40 @@ const sendReviewSms = (snap, context) => {
 
 const sendImageSms = (snap, context) => {
   const photo_id = context.params.documentId;
-  let customerId = null;
-  let customerPhoneRef = null;
+  const image = snap.data();
+  const purchase_id = snap.data().purchase 
+  let   customer_id  = null;
+
   return new Promise((resolve, reject) => {
-    if (!snap.data().picture_url || !snap.data().purchase) {
+    if (!image || !image.picture_url || !purchase_id) {
       return null;
     }
-    return getPurchases(snap.data().purchase)
-      .get()
-      .then(ref => {
-        customerId = ref.data().customer_id;
+    return getPurchasesDoc(purchase_id)
+      .then(photoDoc => {
+          customer_id   = photoDoc.customer_id
       })
       .then(() => {
-        getCustomers(customerId)
-          .get()
-          .then(ref => {
-            customerPhoneRef = ref.data().phone;
-            if (customerPhoneRef) {
+        getCustomersDoc(customer_id)
+          .then(customerDoc => {
+            let  { phone, business_id } = customerDoc;
+            if (phone) {
               const generatedId = createRandomId(4);
               const redirectUrl = DOMAINURL + "/r/" + generatedId;
               const smsBody = {
                 body: `Congrats on your purchase. Here is your photo: ${redirectUrl}`,
                 from: FROM_NUMBER,
-                to: "+61" + customerPhoneRef
+                to: "+61" + phone
               };
               createPhotoShortUrl(
                 generatedId,
-                ref.data().business_id,
-                snap.data().account_id,
+                business_id,
+                image.account_id || null,
                 photo_id
               );
               updateCollectionsforPhotoURL(
                 generatedId,
-                customerId,
-                snap.data().purchase,
+                customer_id,
+                purchase_id,
                 photo_id
               );
               getMessages(generatedId).set({
@@ -185,6 +200,10 @@ const sendImageSms = (snap, context) => {
                 sent: false
               });
               return resolve()
+              //  twilioClient.messages
+              //   .create(smsBody)
+              //   .then(() => resolve())
+              //   .then(() => getPhotos(photo_id).update({ picture_sent: true }));
             }
           });
       });

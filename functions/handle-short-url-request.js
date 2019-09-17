@@ -1,8 +1,5 @@
-const {
-  getBusinesses,
-  getPhotos,
-  getUrls,
-} = require('./database')
+const FieldValue = require("firebase-admin").firestore.FieldValue;
+const { getBusinesses, getPhotos, getUrls } = require("./database");
 
 module.exports = function(req, res) {
   var url_id = req.params.id;
@@ -10,11 +7,16 @@ module.exports = function(req, res) {
     .get()
     .then(urlDoc => {
       if (!urlDoc.exists) {
-        return res.status(404).send("Looks like that link is no longer valid. Sorry about that.");
+        return res
+          .status(404)
+          .send("Looks like that link is no longer valid. Sorry about that.");
       }
       const urlData = urlDoc.data();
-      getUrls(url_id).update({ clicks: (urlData.clicks || 0) + 1 });
-      if (urlDatatype === "business" && urlData.business_id ) {
+      getUrls(url_id).update({
+        clicks: (urlData.clicks || 0) + 1,
+        logs: FieldValue.arrayUnion(new Date())
+      });
+      if (urlData.type === "business" && urlData.business_id)
         return getBusinesses(urlData.business_id)
           .get()
           .then(businessDoc => {
@@ -24,7 +26,6 @@ module.exports = function(req, res) {
             }
             return res.redirect(businessData.review_url);
           });
-      }
       if (urlData.type === "image" && urlData.photo_id) {
         return getPhotos(urlDoc.data().photo_id)
           .get()
