@@ -350,8 +350,8 @@ const updatePhotoCount = ({ business_id, account_id, purchase }) => {
     if (!doc.exists || !business_id || !account_id) {
       return Promise.resolve();
     }
-    return incrementPhotosCounter("businesses", { business_id }).then(() =>
-      incrementPhotosCounter("accounts", { account_id })
+    return incrementPhotosCounter("businesses", business_id ).then(() =>
+      incrementPhotosCounter("accounts",  account_id )
     );
   });
 };
@@ -397,13 +397,19 @@ exports.handleNewPhoto = functions
   .region("asia-northeast1")
   .firestore.document("/photos/{documentId}")
   .onCreate((snap, context) => {
-    const { business_id, account_id, purchase } = snap.data();
+    let { business_id, account_id, purchase } = snap.data();
     if (!purchase) {
       return null;
     }
-    return sendImageSms(snap, context).then(() =>
-      updatePhotoCount({ business_id, account_id, purchase })
-    );
+    return sendImageSms(snap, context).then(() => {
+      return getPurchasesDoc(purchase)
+        .then(purchaseDoc => {
+          business_id = purchaseDoc.business_id;
+        })
+        .then(() => {
+          return updatePhotoCount({ business_id, account_id, purchase });
+        });
+    });
   });
 
 function createRandomId(length) {

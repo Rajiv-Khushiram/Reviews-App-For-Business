@@ -47,5 +47,4 @@ module.exports = {
   getPurchasesDoc: getCollectionDocument('purchases'),
   getPhotosDoc: getCollectionDocument('photos'),
   getUrlsDoc: getCollectionDocument('urls')
-
 }
