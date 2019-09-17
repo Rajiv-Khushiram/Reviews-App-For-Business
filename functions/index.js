@@ -196,7 +196,7 @@ const sendImageSms = (snap, context) => {
               );
               getMessages(generatedId).set({
                 smsBody: smsBody.body,
-                phone_num: customerPhoneRef,
+                phone_num: phone,
                 sent: false
               });
               return resolve()
