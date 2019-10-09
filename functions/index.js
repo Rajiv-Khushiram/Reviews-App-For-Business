@@ -5,6 +5,7 @@ const algoliasearch = require("algoliasearch");
 const express = require("express");
 const cors = require("cors");
 const FROM_NUMBER = "+61480021420";
+const {BigQuery} = require('@google-cloud/bigquery');
 
 const addData = require("./addData")
 const handleShortUrlRequest = require("./handle-short-url-request");
@@ -29,6 +30,9 @@ const {
 } = require("./handle-url-update-for-collections");
 
 const { dispatchSMS } = require("./sms-scheduler")
+const bigqueryClient = new BigQuery();
+
+
 
 
 // const ALGOLIA_ID = functions.config().algolia.app_id;
@@ -58,14 +62,37 @@ api.use(
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   })
 );
-
+async function bigqueryla () { 
+  const sqlQuery = `SELECT
+    CONCAT(
+      'https://stackoverflow.com/questions/',
+      CAST(id as STRING)) as url,
+    view_count
+    FROM \`bigquery-public-data.stackoverflow.posts_questions\`
+    WHERE tags like '%google-bigquery%'
+    ORDER BY view_count DESC
+    LIMIT 10`;
+  
+    const options = {
+      query: sqlQuery,
+      // Location must match that of the dataset(s) referenced in the query.
+      location: 'US',
+    };
+    
+    const [rows] = await bigqueryClient.query(options);
+    console.log([rows])
+  }
 // API
+
 api.get("/api/internal/metrics", internalMetrics);
 api.get("/r/:id", handleShortUrlRequest);
 api.get("/sendMessages", dispatchSMS)
 api.get("/addData", addData)
+api.get("/bigqueryTest", bigqueryla)
 
 exports.api = functions.https.onRequest(api);
+
+
 
 // exports.fbPostFunction = functions
 //   .region("asia-northeast1")
@@ -409,6 +436,8 @@ function createRandomId(length) {
   return result;
 }
 
+
+
 exports.scheduledFunction = functions.pubsub.schedule('00 13 * * *')
 .timeZone('Australia/Melbourne') // Users can choose timezone - default is America/Los_Angeles
 .onRun((context) => {
@@ -416,6 +445,8 @@ exports.scheduledFunction = functions.pubsub.schedule('00 13 * * *')
   console.log("Sent Messages Terminated")
   return null;
 });
+
+
 
 
 // exports.dispatchBirdMessages = functions.pubsub
